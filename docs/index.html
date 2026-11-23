@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Achadinhos da Isanlly</title>
+<meta name="theme-color" content="#2a180e">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topo">
+  <img src="icons/icon-192.png" alt="" class="logo">
+  <div>
+    <h1>Os Achadinhos</h1>
+    <p>da Isanlly · painel de posts</p>
+  </div>
+</header>
+
+<section id="conectar" class="aviso" hidden>
+  <h2>Conectar Mercado Livre</h2>
+  <p>Copie este código e cole no passo “Conectar Mercado Livre” do GitHub (ele vale só por alguns minutos):</p>
+  <div class="codigo"><code id="codigo"></code><button class="btn" data-copiar-codigo>Copiar</button></div>
+  <a class="btn primario" id="link-conectar" target="_blank" rel="noopener">Abrir “Conectar Mercado Livre”</a>
+</section>
+
+<nav class="filtros" role="tablist">
+  <button class="chip ativo" data-filtro="novos">Para publicar</button>
+  <button class="chip" data-filtro="publicados">Já publicados</button>
+  <button class="chip" data-filtro="todos">Todos</button>
+  <a class="chip mais" id="link-novo" target="_blank" rel="noopener">＋ Post de um link</a>
+</nav>
+
+<p id="status" class="status">Carregando…</p>
+<main id="lista"></main>
+<div id="toast" class="toast" role="status"></div>
+
+<template id="tpl-card">
+  <article class="card">
+    <div class="midia">
+      <img loading="lazy" alt="">
+      <video playsinline controls preload="none" hidden></video>
+    </div>
+    <div class="alternar" hidden>
+      <button data-midia="imagem" class="ativo">📷 Foto</button>
+      <button data-midia="video">🎬 Vídeo</button>
+    </div>
+    <div class="corpo">
+      <div class="meta"><span class="cat"></span><span class="quando"></span></div>
+      <h3></h3>
+      <textarea rows="9" spellcheck="false" aria-label="Texto do post"></textarea>
+      <button class="btn grande primario" data-acao="compartilhar">📲 Compartilhar no WhatsApp</button>
+      <div class="linha">
+        <button class="btn" data-acao="copiar">📋 Copiar texto</button>
+        <button class="btn" data-acao="baixar">⬇️ Baixar</button>
+      </div>
+      <div class="linha">
+        <button class="btn sutil" data-acao="publicado">✅ Marcar como publicado</button>
+        <button class="btn sutil" data-acao="restaurar" hidden>↩️ Texto original</button>
+      </div>
+    </div>
+  </article>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>

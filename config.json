@@ -1,0 +1,46 @@
+{
+  "marca": {
+    "nome": "Os Achadinhos da Isanlly",
+    "instagram_tiktok": "@isanllyindica",
+    "cores": {
+      "fundo_escuro": [42, 24, 14],
+      "fundo_madeira": [110, 68, 38],
+      "creme": [248, 236, 214],
+      "dourado": [242, 186, 72],
+      "luz": [255, 214, 140],
+      "desconto": [214, 74, 52],
+      "turquesa": [38, 150, 140]
+    }
+  },
+  "afiliado": {
+    "matt_word": "milianisanlly20220709084934",
+    "matt_tool": "29477931"
+  },
+  "busca": {
+    "posts_por_execucao": 6,
+    "desconto_minimo": 15,
+    "dias_sem_repetir": 21,
+    "dias_guardar_midia": 10,
+    "categorias": {
+      "MLB1574": "Casa e Decoração",
+      "MLB1246": "Beleza",
+      "MLB1000": "Eletrônicos",
+      "MLB5726": "Eletrodomésticos",
+      "MLB1384": "Bebês",
+      "MLB1276": "Esportes",
+      "MLB1051": "Celulares",
+      "MLB263532": "Ferramentas",
+      "MLB1132": "Brinquedos",
+      "MLB1430": "Moda"
+    }
+  },
+  "texto": {
+    "modelo_claude": "claude-opus-5-5",
+    "esforco": "low"
+  },
+  "video": {
+    "ativo": true,
+    "largura": 1080,
+    "altura": 1350
+  }
+}

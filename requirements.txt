@@ -1,0 +1,4 @@
+requests>=2.32
+pillow>=11.0
+anthropic>=0.80
+cryptography>=44.0

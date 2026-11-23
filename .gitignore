@@ -3,3 +3,7 @@ _site/
 __pycache__/
 *.pyc
 .env
+android/firma-local/
+android/app/build/
+android/.gradle/
+android/build/

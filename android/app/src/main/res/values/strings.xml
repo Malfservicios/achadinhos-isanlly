@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- app_name e start_url ficam em app/build.gradle.kts -->
+    <!-- Liga o app ao site (o site confirma em malfservicios.github.io/.well-known/assetlinks.json) -->
+    <string name="asset_statements" translatable="false">
+        [{
+            \"relation\": [\"delegate_permission/common.handle_all_urls\"],
+            \"target\": {\"namespace\": \"web\", \"site\": \"https://malfservicios.github.io\"}
+        }]
+    </string>
+</resources>

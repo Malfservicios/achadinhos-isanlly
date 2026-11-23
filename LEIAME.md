@@ -70,3 +70,15 @@ pip install -r requirements.txt
 python -m gerador.main links "https://meli.la/1ffx3hM | 79,90 | 119,90"
 ```
 Hace falta `ffmpeg` en el PATH (o la variable `FFMPEG`). El resultado queda en `dados/`.
+
+## App de Android (APK)
+`android/` es una *Trusted Web Activity*: abre el panel a pantalla completa, con el ícono del grupo.
+GitHub la compila sola cuando cambia algo en `android/` (**Actions → APK de Android**) y la publica en
+**Releases**. Enlace fijo a la última versión:
+https://github.com/Malfservicios/achadinhos-isanlly/releases/latest/download/achadinhos.apk
+
+- La llave de firma está en `android/firma-local/` (fuera de git) y en los secrets
+  `SIGNING_KEY_BASE64` / `SIGNING_PASSWORD`. **Guarda una copia**: sin ella no se pueden instalar
+  actualizaciones encima de la app.
+- El repositorio `Malfservicios/malfservicios.github.io` guarda `.well-known/assetlinks.json` con la huella
+  de esa llave; así Android oculta la barra del navegador.

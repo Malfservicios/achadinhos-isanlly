@@ -159,7 +159,9 @@ def main(argv):
         if post:
             novos.append(post)
             historico[p["ml_id"]] = agora().isoformat()
-    posts = limpar_antigos(novos + posts)
+    # o mesmo produto gerado de novo substitui o post antigo
+    repetidos = {n["ml_id"] for n in novos}
+    posts = limpar_antigos(novos + [p for p in posts if p.get("ml_id") not in repetidos])
     salvar_json(POSTS_JSON, posts)
     salvar_json(HISTORICO, historico)
     print(f"\n{len(novos)} post(s) novo(s). Total no painel: {len(posts)}")

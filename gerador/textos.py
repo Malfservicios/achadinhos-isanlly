@@ -70,6 +70,8 @@ GANCHOS = ["Gente, olha esse achadinho!", "Achei uma oferta muito boa!", "Olha o
 
 def _nome_falado(titulo, palavras=7):
     """Primeiras palavras do titulo, sem numeros/medidas no fim (soa melhor falado)."""
+    import re
+    titulo = re.sub(r"(?<=[A-Za-zÀ-ú])(?=\d)|(?<=\d)(?=[A-Za-zÀ-ú])", " ", titulo)  # "Bluetooth6.0" -> "Bluetooth 6.0"
     p = titulo.split()[:palavras]
     soltas = {"e", "de", "da", "do", "das", "dos", "com", "para", "pra", "em", "a", "o", "-", "+", "/"}
     while len(p) > 3 and (any(ch.isdigit() for ch in p[-1]) or p[-1].lower() in soltas):
@@ -83,7 +85,7 @@ def _criativo_padrao(p):
     return {"chamada": rnd.choice(CHAMADAS), "nome_curto": nome, "beneficios": [],
             "fechamento": rnd.choice(FECHAMENTOS),
             "narracao_gancho": rnd.choice(GANCHOS),
-            "narracao_descricao": f"É o {_nome_falado(p['titulo'])}. Um produto muito bem avaliado no Mercado Livre."}
+            "narracao_descricao": f"{_nome_falado(p['titulo'], 5)}. Um achadinho muito bem avaliado no Mercado Livre."}
 
 
 def _reais_falado(v, com_moeda=True):

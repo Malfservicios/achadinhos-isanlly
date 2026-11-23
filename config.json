@@ -40,7 +40,11 @@
   },
   "video": {
     "ativo": true,
-    "largura": 1080,
-    "altura": 1350
+    "duracao_alvo": 15,
+    "voz": "pt-BR-ThalitaMultilingualNeural",
+    "velocidade_voz": "+10%",
+    "narracao": true,
+    "musica": true,
+    "legendas": true
   }
 }

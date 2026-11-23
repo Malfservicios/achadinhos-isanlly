@@ -24,8 +24,13 @@ ESQUEMA = {
         "beneficios": {"type": "array", "items": {"type": "string"},
                        "description": "3 benefícios curtos (máx. 55 caracteres cada), sem emoji"},
         "fechamento": {"type": "string", "description": "1 frase curta convidando a aproveitar"},
+        "narracao_gancho": {"type": "string",
+                            "description": "abertura falada do vídeo, 4 a 7 palavras, animada, sem emoji (ex.: 'Gente, olha esse achadinho!')"},
+        "narracao_descricao": {"type": "string",
+                               "description": "2 frases curtas faladas descrevendo o produto e por que vale a pena, "
+                                              "18 a 28 palavras no total, sem emoji, sem preço, sem números difíceis de ler"},
     },
-    "required": ["chamada", "nome_curto", "beneficios", "fechamento"],
+    "required": ["chamada", "nome_curto", "beneficios", "fechamento", "narracao_gancho", "narracao_descricao"],
     "additionalProperties": False,
 }
 
@@ -59,11 +64,56 @@ def _criativo_claude(p):
     return json.loads(texto)
 
 
+GANCHOS = ["Gente, olha esse achadinho!", "Achei uma oferta muito boa!", "Olha o que eu encontrei pra vocês!",
+           "Esse achadinho vale a pena!"]
+
+
+def _nome_falado(titulo, palavras=7):
+    """Primeiras palavras do titulo, sem numeros/medidas no fim (soa melhor falado)."""
+    p = titulo.split()[:palavras]
+    soltas = {"e", "de", "da", "do", "das", "dos", "com", "para", "pra", "em", "a", "o", "-", "+", "/"}
+    while len(p) > 3 and (any(ch.isdigit() for ch in p[-1]) or p[-1].lower() in soltas):
+        p.pop()
+    return " ".join(p)
+
+
 def _criativo_padrao(p):
     rnd = random.Random(p["ml_id"])
     nome = p["titulo"] if len(p["titulo"]) <= 60 else p["titulo"][:57].rsplit(" ", 1)[0] + "…"
     return {"chamada": rnd.choice(CHAMADAS), "nome_curto": nome, "beneficios": [],
-            "fechamento": rnd.choice(FECHAMENTOS)}
+            "fechamento": rnd.choice(FECHAMENTOS),
+            "narracao_gancho": rnd.choice(GANCHOS),
+            "narracao_descricao": f"É o {_nome_falado(p['titulo'])}. Um produto muito bem avaliado no Mercado Livre."}
+
+
+def _reais_falado(v, com_moeda=True):
+    """Como se fala no Brasil: '79 reais e 90' / '119 e 90' (sem 'centavos', mais curto)."""
+    inteiro, cent = int(v), round((v - int(v)) * 100)
+    txt = f"{inteiro} {'real' if inteiro == 1 else 'reais'}" if com_moeda or not cent else str(inteiro)
+    return f"{txt} e {cent}" if cent else txt
+
+
+CTAS = ["O link está aqui na mensagem. Corre que acaba rápido!", "Toca no link da mensagem e garante o seu!",
+        "O link está aqui embaixo. Aproveita!"]
+
+
+def roteiro_narracao(p, c):
+    """Narracao do video em blocos (cada bloco casa com uma cena)."""
+    rnd = random.Random(p["ml_id"] + "cta")
+    if p.get("preco") is None:
+        preco = "O preço atualizado está no link."
+    elif p.get("preco_original"):
+        preco = f"De {_reais_falado(p['preco_original'], False)}, por apenas {_reais_falado(p['preco'])}!"
+    else:
+        preco = f"Está saindo por {_reais_falado(p['preco'])}."
+    if p.get("frete_gratis"):
+        preco += " E com frete grátis!"
+    return {
+        "gancho": c.get("narracao_gancho") or GANCHOS[0],
+        "descricao": c.get("narracao_descricao") or f"É o {_nome_falado(p['titulo'])}.",
+        "preco": preco,
+        "cta": rnd.choice(CTAS),
+    }
 
 
 def criativo(p):

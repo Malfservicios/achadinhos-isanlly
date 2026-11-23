@@ -110,7 +110,7 @@ def gerar_post(p):
     arte.save(pasta / "imagem.jpg", quality=90, optimize=True)
     tem_video = False
     if CONFIG["video"]["ativo"]:
-        tem_video = gerar_video(p, fotos, arte, pasta / "video.mp4", c.get("nome_curto"))
+        tem_video = gerar_video(p, fotos, c, pasta / "video.mp4")
     return {
         "id": pid, "criado_em": ts.isoformat(timespec="minutes"), "ml_id": p["ml_id"],
         "titulo": p["titulo"], "nome_curto": c.get("nome_curto"), "categoria": p.get("categoria", ""),
